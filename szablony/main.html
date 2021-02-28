@@ -1,0 +1,21 @@
+{% extends 'incl.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ 'Strona glowna' }} {% endblock %}
+{% block style %} {% static 'styl.css' %} {% endblock %}
+    {% block content %}
+
+    <h1>main page</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Hello {{ user.username }} </p>
+        <a href="{% url 'logout' %}">wyloguj</a>
+    {% else %}
+        <a href="{% url 'login' %}">Zaloguj</a>
+        <a href="{% url 'register' %}">REJESTRACJA</a>
+    {% endif %}
+        
+    {% endblock %}
+    
+</body>
+</html>

@@ -1,0 +1,12 @@
+-konta użytkowników v
+
+-restart hasła
+
+-potwierdzenie konta mailemv
+
+-dodawanie ofert przez uzytkownikow 
+-akceptowanie ofert przez uzytkownikow
+-usuwanie ofert przez uzytkownikow
+
+-live czat
+
