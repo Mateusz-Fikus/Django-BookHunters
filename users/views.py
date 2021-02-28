@@ -62,6 +62,8 @@ def view_profile(request, username):
 
 
 
+#little change
+
 
 #FORMULARZ REJESTRACYJNY
 
