@@ -2,20 +2,21 @@
 {% load static %}
 {% load bootstrap4 %}
 {% block title %} {{ 'Strona glowna' }} {% endblock %}
-{% block style %} {% static 'styl.css' %} {% endblock %}
+{% block style %} {% static 'css/styl.css' %} {% endblock %}
     {% block content %}
 
     <h1>main page</h1>
     
     {% if user.is_authenticated %}
         <p>Hello {{ user.username }} </p>
-        <a href="{% url 'logout' %}">wyloguj</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'my_offers' %}">My offers</a>
     {% else %}
-        <a href="{% url 'login' %}">Zaloguj</a>
-        <a href="{% url 'register' %}">REJESTRACJA</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
     {% endif %}
         
-    <a href="{% url 'all_offers'%}">Wszystkie ogłoszenia</a>
+    <a href="{% url 'all_offers'%}">Books</a>
 
 
 

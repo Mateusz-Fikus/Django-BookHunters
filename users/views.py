@@ -119,7 +119,7 @@ def register(request):
             messages.info(request, 'passwords arent matching')
 
         
-    return render(request, 'rejestracja.html',  {'title' : "Rejestracja"})
+    return render(request, 'rejestracja.html',  {'title' : "Register"})
 
 def login(request):
     if request.method == 'POST':
@@ -148,11 +148,10 @@ def activate(request, uidb64, token):
         print(id)
         user = User.objects.get(pk=id)
         print(user)
-        
+
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-    print(token)
 
     if user is not None and token_generator.check_token(user, token):
         user.is_active = True

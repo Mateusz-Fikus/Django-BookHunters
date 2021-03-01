@@ -6,7 +6,7 @@
 
 -dodawanie ofert przez uzytkownikow ---------
 -akceptowanie ofert przez uzytkownikow
--usuwanie ofert przez uzytkownikow
+-usuwanie ofert przez uzytkownikow v
 
 -live czat
 
