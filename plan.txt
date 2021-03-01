@@ -2,9 +2,9 @@
 
 -restart hasła
 
--potwierdzenie konta mailemv
+-potwierdzenie konta mailem v
 
--dodawanie ofert przez uzytkownikow 
+-dodawanie ofert przez uzytkownikow ---------
 -akceptowanie ofert przez uzytkownikow
 -usuwanie ofert przez uzytkownikow
 

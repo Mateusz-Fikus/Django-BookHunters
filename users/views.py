@@ -58,7 +58,7 @@ def view_profile(request, username):
     except UserProfilePicture.DoesNotExist:
         picture = UserProfilePicture.objects.get(id=19)
 
-    return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture})
+    return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username})
 
 
 
@@ -78,7 +78,6 @@ def register(request):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
-        print(User.objects.all())
 
         user = get_user_model()
         if password1 == password1:
@@ -116,10 +115,10 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
 
-        User = auth.authenticate(username=username, password=password)
+        User = auth.authenticate(username=email, password=password)
 
         if User is not None:
             auth.login(request, User)
@@ -150,7 +149,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         
-        return redirect('/')
+        return redirect('login.html')
     else:
         return redirect('/')
 

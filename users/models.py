@@ -77,6 +77,6 @@ class User(AbstractBaseUser):
 
 #ZDJECIA PROFILOWE
 class UserProfilePicture(models.Model):
-    user= models.ForeignKey(User, on_delete= models.CASCADE, null=True, blank=True, unique=True)
+    user= models.OneToOneField(User, on_delete= models.CASCADE, null=True, blank=True)
     photo= models.ImageField(upload_to= 'profile_pictures', null=True, blank=True)
 
