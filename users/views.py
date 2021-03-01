@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 
+#FORMULARZE
+
+
+
 #POBIERANIE OFERT OD DANEGO UŻYTKOWNIKA NA PROFIL
 from offers.models import offer
 #POBIERANIE ZDJECIA NA PROFIL
@@ -69,6 +73,8 @@ def view_profile(request, username):
 
 def register(request):
 
+
+
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -90,6 +96,8 @@ def register(request):
             else:
                 user = User.objects.create_user(first_name = first_name, last_name = last_name, username = username, email = email, phone_number = phone_number, password = password1)
                 user.save()
+
+
 #WYSYŁANIE MAILA Z TOKENEM AKTYWACJI KONTA
 
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
@@ -140,6 +148,7 @@ def activate(request, uidb64, token):
         print(id)
         user = User.objects.get(pk=id)
         print(user)
+        
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 

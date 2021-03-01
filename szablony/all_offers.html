@@ -9,4 +9,27 @@
 
 {% block content %}
 
+{% if offers|length == 0 %}
+    
+<h2>There no offers avaliable!</h2>
+
+{% else %}
+
+
+{% for offer in offers %}
+<div class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ offer.title }}</h5>
+      <p class="card-text">{{ offer.desc }}</p>
+      <a href="{% url 'offer_info' id=offer.id %}" class="btn btn-primary">Check out!</a>
+    </div>
+  </div>
+{% endfor %}
+
+{% endif %}
+
+
+
+
 {% endblock %}
