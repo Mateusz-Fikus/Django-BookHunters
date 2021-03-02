@@ -3,12 +3,16 @@
 {% load bootstrap4 %}
 {% block title %} {{ 'Strona glowna' }} {% endblock %}
 {% block style %} {% static 'css/styl.css' %} {% endblock %}
+
+
+{% load crispy_forms_tags %}
+
     {% block content %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {{ form }}
+    {{ form|crispy }}
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

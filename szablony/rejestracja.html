@@ -4,9 +4,85 @@
 {% block title %} {{ title }} {% endblock %}
 {% block style %} {% static 'css/styl.css' %} {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     
+
+
+
+<form method="POST" enctype="multipart/form-data">
+
+    <div class="anus">
+        <div class="container cont2">
+            
+            <div class="col-lg-6 offset-lg-3">
+                <h1 class="heder">Register</h1>
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                            {{ form.first_name|as_crispy_field }}
+    
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.last_name|as_crispy_field}}
+                            
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.username|as_crispy_field }}
+
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.email|as_crispy_field }}
+
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.phone_number|as_crispy_field }}
+
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.password1|as_crispy_field }}
+
+                        </div>
+                        <div class="form-group">
+
+                            {{ form.password2|as_crispy_field }}
+
+                        </div>
+                        <!-- 
+
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <a href="{% url 'mainpage' %}">Powrot</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+-->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> 
+
+
+
+
+
+<!--
+
 
 <div class="anus">
     <div class="container cont2">
@@ -61,3 +137,5 @@
 </div>
 
 {% endblock %}
+
+-->

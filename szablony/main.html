@@ -12,6 +12,7 @@
         <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'my_offers' %}">My offers</a>
         <a href="{% url 'new_offer' %}">New offer</a>
+        <a href="{% url 'view_profile' username=username %}">My profile</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>

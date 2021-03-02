@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 
 #FORMULARZE
-
+from .forms import RegistrationForm
 
 
 #POBIERANIE OFERT OD DANEGO UŻYTKOWNIKA NA PROFIL
@@ -73,6 +73,41 @@ def view_profile(request, username):
 
 def register(request):
 
+    form = RegistrationForm()
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+           # print(form.data['id'])
+
+            user = User.objects.get(username=form.data['username'])
+            print(user)
+            print(user.email)
+           #EMAIL AKTYWACYJNY
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                
+            domain = get_current_site(request).domain
+            link = reverse('activate', kwargs={
+                'uidb64': uidb64, 'token': token_generator.make_token(user)})
+
+            activate_url = 'http://' + domain + link
+            subject = 'witamy na pizdowce'
+            message = 'Hej ' + user.username + ' Please verify your account by clicking this link\n' + activate_url
+            recipient = str(user.email)
+            send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently = False)
+
+            messages.info(request, 'Please verify your account by confirmation email')
+            return render(request, 'login.html',  {'title' : "login"})
+            #return redirect('/')
+
+
+    return render(request, 'rejestracja.html',  {'title' : "Register", 'form': form})
+
+
+#OLD REGISTRATION SYSTEM BEFORE FORM IMPLEMENTATION
+
+"""
 
 
     if request.method == 'POST':
@@ -98,6 +133,7 @@ def register(request):
                 user.save()
 
 
+
 #WYSYŁANIE MAILA Z TOKENEM AKTYWACJI KONTA
 
                 uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
@@ -117,9 +153,8 @@ def register(request):
                 #return redirect('/')
         else:
             messages.info(request, 'passwords arent matching')
-
-        
-    return render(request, 'rejestracja.html',  {'title' : "Register"})
+"""
+            
 
 def login(request):
     if request.method == 'POST':
