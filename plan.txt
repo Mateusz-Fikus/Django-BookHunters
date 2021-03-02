@@ -4,9 +4,12 @@
 
 -potwierdzenie konta mailem v
 
--dodawanie ofert przez uzytkownikow ---------
+-dodawanie ofert przez uzytkownikow v
+-edytowanie ofert v
 -akceptowanie ofert przez uzytkownikow
 -usuwanie ofert przez uzytkownikow v
 
 -live czat
+
+- design ;_;
 

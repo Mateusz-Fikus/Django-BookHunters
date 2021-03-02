@@ -145,7 +145,6 @@ def logout(request):
 def activate(request, uidb64, token):
     try:
         id = force_text(urlsafe_base64_decode(uidb64))
-        print(id)
         user = User.objects.get(pk=id)
         print(user)
 

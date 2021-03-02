@@ -1,0 +1,16 @@
+{% extends 'incl.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ 'Strona glowna' }} {% endblock %}
+{% block style %} {% static 'css/styl.css' %} {% endblock %}
+    {% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+    {% endblock %}

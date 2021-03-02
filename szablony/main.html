@@ -11,6 +11,7 @@
         <p>Hello {{ user.username }} </p>
         <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'my_offers' %}">My offers</a>
+        <a href="{% url 'new_offer' %}">New offer</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
