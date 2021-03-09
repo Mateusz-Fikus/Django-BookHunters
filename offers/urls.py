@@ -11,4 +11,5 @@ urlpatterns = [
     path('my_offers/', views.my_offers, name='my_offers'),
     path('delete/<id>', views.delete_offer, name='delete_offer'),
     path('edit/<id>', views.edit_offer, name='edit_offer'),
+    path('accept_offer/<id>', views.accept_offer, name='accept_offer')
 ]

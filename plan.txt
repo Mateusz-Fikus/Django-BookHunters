@@ -1,12 +1,12 @@
 -konta użytkowników v
 
--restart hasła
+-restart hasła v
 
 -potwierdzenie konta mailem v
 
 -dodawanie ofert przez uzytkownikow v
 -edytowanie ofert v
--akceptowanie ofert przez uzytkownikow
+-akceptowanie ofert przez uzytkownikow v
 -usuwanie ofert przez uzytkownikow v
 
 -live czat

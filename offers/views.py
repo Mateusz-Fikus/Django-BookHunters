@@ -11,8 +11,13 @@ User = get_user_model()
 
 # Create your views here.
 
+#def purchases(request):
+    #purchased = offer.objects.filter(id_buyer=request.user.id)
+   # return render(request, 'all_offers.html', {'offers': offers_all, 'title': 'all books!'})
+
+
 def all_offers(request):
-    offers_all = offer.objects.all()
+    offers_all = offer.objects.filter(id_buyer__isnull=True)
 
     return render(request, 'all_offers.html', {'offers': offers_all, 'title': 'all books!'})
 
@@ -38,7 +43,7 @@ def new_offer(request):
     return render(request, 'form_offer.html', {'form': form, 'title':'Add offer'})
     
 
-
+@login_required
 def edit_offer(request, id):
 
     offer_ed = get_object_or_404(offer, pk=id)
@@ -51,7 +56,7 @@ def edit_offer(request, id):
 
     return render(request, 'form_offer.html', {'form': form, 'title': 'Edit offer'})
 
-
+@login_required
 def delete_offer(request, id):
 
     offert = offer.objects.get(id=id)
@@ -71,8 +76,10 @@ def my_offers(request):
     return render(request, 'my_offers.html', {'offers': offers_all, 'title': 'Moje oferty'})
 
 @login_required
-def accept_offer(request):
-
+def accept_offer(request, id):
+    selected_offer = offer.objects.get(id=id)
+    selected_offer.id_buyer = User.objects.get(id=request.user.id)
+    selected_offer.save()
     return redirect('/')
 
 
