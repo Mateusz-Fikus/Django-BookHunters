@@ -1,0 +1,41 @@
+{% extends 'incl.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ title }} {% endblock %}
+{% block style %} {% static 'css/styl.css' %} {% endblock %}
+
+
+{% block content %}
+
+
+
+    <h1>{{ offer.title }}</h1>
+
+    <h2>{{ offer.price }}</h2>
+
+    <h3>{{ offer.desc }}</h3>
+
+
+    {% if offer.id_owner_user.id == user.id and user.is_authenticated %}
+
+        <a href="{% url 'delete_offer' id=offer.id %}">Delete</a>
+        <a href="{% url 'edit_offer' id=offer.id %}">Edit</a>
+
+    {% elif user.is_authenticated %}
+
+        {% if offer.id_buyer == null %}
+            <a href="{% url 'accept_offer' id=offer.id %}">Buy</a>
+        {% else %}
+            <h3>Offer no longer avaliable!</h3>
+        {% endif %}
+        
+    {% else %}
+
+        <button type="button" title="You must be logged in to accept offers!" class="btn btn-secondary">Accept offer</button>
+
+    {% endif %}
+
+
+
+{% endblock %}
+

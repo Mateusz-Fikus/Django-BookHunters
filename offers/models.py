@@ -30,7 +30,7 @@ class offer(models.Model):
     price = models.IntegerField(null=False, blank=False)
     id_buyer = models.ForeignKey(User, null=True, blank=True, default=None, on_delete = models.CASCADE, related_name='buyer')
     front_picture = models.ImageField(upload_to='book_covers')
-    back_picture = models.ImageField(upload_to='book_covers', null='True', blank=True, default=None)
+    back_picture = models.ImageField(upload_to='book_covers', null=True, blank=True, default=None)
     genre = models.CharField(max_length=10, null=False, blank=False, choices=GENRE_CHOICES, default='other')
     
     def __str__(self):

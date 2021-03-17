@@ -8,6 +8,7 @@
 -edytowanie ofert v
 -akceptowanie ofert przez uzytkownikow v
 -usuwanie ofert przez uzytkownikow v
+-wyszukiwarka / filtrowanie
 
 -live czat
 

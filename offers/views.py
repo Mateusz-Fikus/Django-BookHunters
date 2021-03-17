@@ -11,10 +11,6 @@ User = get_user_model()
 
 # Create your views here.
 
-#def purchases(request):
-    #purchased = offer.objects.filter(id_buyer=request.user.id)
-   # return render(request, 'all_offers.html', {'offers': offers_all, 'title': 'all books!'})
-
 
 def all_offers(request):
     offers_all = offer.objects.filter(id_buyer__isnull=True)
@@ -61,7 +57,7 @@ def delete_offer(request, id):
 
     offert = offer.objects.get(id=id)
     
-    #DOMYŚLNIE OFFER.ID_OWNER_USER ZWRACA EMAIL WLASCICIELA - NALEŻY DODAĆ .id
+    #DOMYŚLNIE OFFER.ID_OWNER_USER ZWRACA EMAIL WLASCICIELA (__str__ z modelu - email) - NALEŻY DODAĆ .id
     if offert.id_owner_user.id == request.user.id:
         offert.delete()
         return redirect('my_offers')

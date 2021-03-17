@@ -1,0 +1,28 @@
+{% extends 'incl.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ title }} {% endblock %}
+{% block style %} {% static 'css/styl.css' %} {% endblock %}
+
+
+
+{% block content %}
+
+
+<p>{{ user.username }}</p>
+<img src="{{ profile_pic.photo.url }}" class="img-thumbnail">
+
+{% if offers == 0 %}
+    <h3>Uzytkownik nie ma ofert</h3>
+
+{% else %}
+    {% for offer in offers %}
+
+    <p>{{ offer.title }} </p>
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock %}

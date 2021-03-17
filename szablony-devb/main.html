@@ -1,0 +1,32 @@
+{% extends 'incl.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %} {{ 'Strona glowna' }} {% endblock %}
+{% block style %} {% static 'css/styl.css' %} {% endblock %}
+    {% block content %}
+
+    <h1>main page</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Hello {{ user.username }} </p>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'my_offers' %}">My offers</a>
+        <a href="{% url 'new_offer' %}">New offer</a>
+        <a href="{% url 'view_profile' username=username %}">My profile</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+        
+    <a href="{% url 'all_offers'%}">Books</a>
+
+
+
+
+    
+    {% endblock %}
+    
+</body>
+</html>
+
+

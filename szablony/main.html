@@ -1,32 +1,29 @@
-{% extends 'incl.html' %}
 {% load static %}
-{% load bootstrap4 %}
-{% block title %} {{ 'Strona glowna' }} {% endblock %}
-{% block style %} {% static 'css/styl.css' %} {% endblock %}
-    {% block content %}
 
-    <h1>main page</h1>
-    
-    {% if user.is_authenticated %}
-        <p>Hello {{ user.username }} </p>
-        <a href="{% url 'logout' %}">Logout</a>
-        <a href="{% url 'my_offers' %}">My offers</a>
-        <a href="{% url 'new_offer' %}">New offer</a>
-        <a href="{% url 'view_profile' username=username %}">My profile</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
-    {% endif %}
-        
-    <a href="{% url 'all_offers'%}">Books</a>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CRM</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
+</head>
+<body>
+	{%  include 'navbar.html' %}
+	<div class="container-fluid">
+	{% block content %}
 
 
 
-
-    
-    {% endblock %}
-    
+	{% endblock %}
+    </div>
+	<hr>
+	<h5>Our footer</h5>
+	
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>
-
-

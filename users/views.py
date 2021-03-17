@@ -22,7 +22,6 @@ from django.core.mail import send_mail
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
-from django.views import View
 from users.utils import token_generator
 from django.urls import reverse
 
@@ -58,7 +57,7 @@ def view_profile(request, username):
         picture = UserProfilePicture.objects.get(user=user_prof.id)
 #W RAZIE BRAKU ZDJECIA PROFILOWEGO WYBIERANE JEST DOMYSLNE ZDJECIE
     except UserProfilePicture.DoesNotExist:
-        picture = UserProfilePicture.objects.get(id=19)
+        picture = None
 
 
     return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username})
@@ -107,7 +106,6 @@ def register(request):
 
         return render(request, 'rejestracja.html',  {'title' : "Register", 'form': form})
 
-
 def forgot_password(request):
 
     if request.method == 'POST':
@@ -137,8 +135,6 @@ def forgot_password(request):
 
     return render(request, 'forgot_password.html', {'title':'Password reset'})
 
-
-
 def reset_pasword(request, uidb64, token):
     form = SetPasswordForm(User)
     try:
@@ -152,7 +148,6 @@ def reset_pasword(request, uidb64, token):
 
         if request.method == 'POST':
             form = SetPasswordForm(user, request.POST)
-            #form = RegistrationForm(request.POST)
             if form.is_valid():
                 form.save()
                 return redirect('/')
@@ -164,61 +159,6 @@ def reset_pasword(request, uidb64, token):
     print(token_generator.check_token(user, token))
     print('dzialas')
     return redirect('/')
-
-        
-
-
-
-#OLD REGISTRATION SYSTEM BEFORE FORM IMPLEMENTATION
-
-"""
-
-
-    if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        phone_number = request.POST['phone_number']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-
-        user = get_user_model()
-        if password1 == password1:
-            if User.objects.filter(username=username).exists():
-                print('username taken')
-                messages.info(request, 'username taken')
-
-            elif User.objects.filter(email=email).exists():
-                messages.info(request, 'email allready exists')
-            else:
-                user = User.objects.create_user(first_name = first_name, last_name = last_name, username = username, email = email, phone_number = phone_number, password = password1)
-                user.save()
-
-
-
-#WYSYŁANIE MAILA Z TOKENEM AKTYWACJI KONTA
-
-                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-                
-                domain = get_current_site(request).domain
-                link = reverse('activate', kwargs={
-                    'uidb64': uidb64, 'token': token_generator.make_token(user)})
-
-                activate_url = 'http://' + domain + link
-                subject = 'witamy na pizdowce'
-                message = 'Hej ' + user.username + ' Please verify your account by clicking this link\n' + activate_url
-                recipient = str(email)
-                send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently = False)
-
-                messages.info(request, 'Please verify your account by confirmation email')
-                return render(request, 'login.html',  {'title' : "login"})
-                #return redirect('/')
-        else:
-            messages.info(request, 'passwords arent matching')
-"""
-            
 
 def login(request):
     if request.method == 'POST':

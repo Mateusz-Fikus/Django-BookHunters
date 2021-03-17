@@ -10,5 +10,9 @@ User = get_user_model()
 def main(request):
     uname = request.user.username
     print(get_current_site(request).domain)
-    return render(request, 'main.html', {'username': uname})
+    return render(request, 'dashboard.html', {'username': uname})
+
+
+def test(request):
+    return render(request, 'login.html')
 
