@@ -10,7 +10,29 @@
 -usuwanie ofert przez uzytkownikow v
 -wyszukiwarka / filtrowanie
 
+
+-USUWANIE ZAINTERESOWANEGO
+
+
 -live czat
 
 - design ;_;
+
+
+
+
+
+TEMPLEJTY:
+
+-rejestracja v
+-login v
+-strona glowna 
+-user info + moje oferty + moje zakupy -----
+-password reset ---- += user info
+-dodawanie oferty v
+-edycja oferty v
+-widok oferty
+-navbar
+-footer
+-usuwanie zainteresowanego ---- my purchases // 
 

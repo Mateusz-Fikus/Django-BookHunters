@@ -104,7 +104,7 @@ def register(request):
                 #return redirect('/')
 
 
-        return render(request, 'rejestracja.html',  {'title' : "Register", 'form': form})
+        return render(request, 'register.html',  {'title' : "Register", 'form': form})
 
 def forgot_password(request):
 

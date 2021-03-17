@@ -33,9 +33,8 @@ def new_offer(request):
             offer = form.save(commit=False)
             offer.id_owner_user = user
             form.save()
-            return redirect('all_offers')
+            return redirect('/')
 
-    print('tutaj')
     return render(request, 'form_offer.html', {'form': form, 'title':'Add offer'})
     
 
@@ -43,6 +42,11 @@ def new_offer(request):
 def edit_offer(request, id):
 
     offer_ed = get_object_or_404(offer, pk=id)
+
+    if request.user.id != offer_ed.id_owner_user.id:
+
+        return redirect('/')
+
 
     form = OfferForm(request.POST or None, request.FILES or None, instance=offer_ed)
 

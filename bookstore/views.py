@@ -14,5 +14,5 @@ def main(request):
 
 
 def test(request):
-    return render(request, 'login.html')
+    return render(request, 'my_purchases.html')
 
