@@ -3,3 +3,6 @@ venv
 oldversions
 images
 szablony-devb
+*.sqlite3
+plan.txt
+.gitignore
