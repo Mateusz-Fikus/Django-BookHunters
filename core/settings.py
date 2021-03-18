@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ksiegarnia.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -65,7 +65,7 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'users.User'
 
-WSGI_APPLICATION = 'ksiegarnia.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database

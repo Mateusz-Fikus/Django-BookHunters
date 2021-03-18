@@ -25,7 +25,7 @@ from users.models import UserProfilePicture
 from django.core.exceptions import ObjectDoesNotExist
 
 #DO MAILA
-from ksiegarnia.settings import EMAIL_HOST_USER
+from core.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 
 #TOKENY WERYFIKACJI KONTA MAILEM
