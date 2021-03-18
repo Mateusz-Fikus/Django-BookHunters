@@ -1,4 +1,3 @@
-{% extends 'incl.html' %}
 {% load static %}
 {% load bootstrap4 %}
 {% block title %} {{ title }} {% endblock %}
@@ -8,6 +7,12 @@
 
 {% block content %}
 
+{% if request.user.is_authenticated %}
+
+<p>ok</p>
+{% else %}
+<p>okkk</p>
+{% endif %}
 
 <p>{{ user.username }}</p>
 <img src="{{ profile_pic.photo.url }}" class="img-thumbnail">

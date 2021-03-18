@@ -1,6 +1,16 @@
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_control
+
+
+
+
+
+
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth.forms import SetPasswordForm
+
 
 #FORMULARZE
 from .forms import RegistrationForm
@@ -38,7 +48,10 @@ User = get_user_model()
 
 
 #WYSWIETLANIE PROFILU Z OFERTAMI I ZDJECIEM PROFILOWYM
+
 def view_profile(request, username):
+
+    print(request.user.is_authenticated)
 
     user_prof = get_object_or_404(User, username=username)
     
@@ -160,6 +173,8 @@ def reset_pasword(request, uidb64, token):
     print('dzialas')
     return redirect('/')
 
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -177,9 +192,16 @@ def login(request):
     else:
         return render(request, 'login.html', {'title' : "Login"})
 
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
 def logout(request):
-    auth.logout(request)
-    return redirect('/')
+    if request.method == 'POST':
+
+        auth.logout(request)
+        return redirect('login')
+    return render(request, 'logout.html')
 
 def activate(request, uidb64, token):
     try:

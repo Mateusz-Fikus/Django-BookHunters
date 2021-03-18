@@ -1,0 +1,76 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href=""> &#8592; Back to Profile</a>
+			<hr>
+			<h3 style="text-align: center">Account Settings</h3>
+			<hr>
+			<img class="profile-pic" src="{{ profile_pic.photo.url }}" >
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				
+				
+		
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+		</div>
+	</div>
+</div>
+
+{% if user.id == request.user.id %}
+
+<h3 class="mt-5">My books</h3>
+
+	<div class="row mt-3">
+			<div class="col-md">
+				<div class="card card-body">
+					<h5>Products</h5>
+				</div>
+				<div class="card card-body">
+					<table class="table">
+						<tr>
+							<th>Book title</th>
+							<th>Genre</th>
+							<th>Price</th>
+							<th>Buyer</th>
+							<th>Actions</th>
+						</tr>
+
+						{% for offer in offers %}
+							<tr>
+								<td>{{offer.title}}</td>
+								<td>{{offer.genre}}</td>
+								<td>{{offer.price}} zł</td>
+								<td><a href="{% url 'delete_offer' id=offer.id %}">Delete</a><a class="pl-5" href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
+        						<td><a href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
+							</tr>
+							
+						{% endfor %}
+						
+					</table>
+				</div>
+			</div>
+			
+		</div>
+{% endif %}
+
+{% endblock %}

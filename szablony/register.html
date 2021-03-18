@@ -63,6 +63,13 @@
 			outline: 0px !important;
 		}
 
+		#messages{
+		background-color: grey;
+		color: #fff;
+		padding: 10px;
+		margin-top: 10px;
+		}
+
 	</style>
 
 </head>
@@ -130,7 +137,13 @@
 				</div>
 
 
-					{{form.errors}}
+					{% if form.errors %}
+                    	{% for field in form %}
+                        	{% for error in field.errors %}
+                            	<p id="messages">{{error|escape}}</p>
+                        	{% endfor %}
+                    	{% endfor %}
+                	{% endif %}
 
 				
 				<div class="mt-4">

@@ -1,3 +1,7 @@
+from django.views.decorators.cache import cache_control
+
+
+
 
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import offer
@@ -21,7 +25,9 @@ def offer_info(request, id):
     offer_get = get_object_or_404(offer, pk=id)
     return render(request, 'offer_info.html', {'offer': offer_get, 'title': offer_get.title})
 
-@login_required
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
 def new_offer(request):
 
     form = OfferForm()
@@ -38,7 +44,8 @@ def new_offer(request):
     return render(request, 'form_offer.html', {'form': form, 'title':'Add offer'})
     
 
-@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
 def edit_offer(request, id):
 
     offer_ed = get_object_or_404(offer, pk=id)
@@ -56,7 +63,8 @@ def edit_offer(request, id):
 
     return render(request, 'form_offer.html', {'form': form, 'title': 'Edit offer'})
 
-@login_required
+
+@login_required(login_url='login')
 def delete_offer(request, id):
 
     offert = offer.objects.get(id=id)

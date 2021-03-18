@@ -30,9 +30,10 @@ TEMPLEJTY:
 -user info + moje oferty + moje zakupy -----
 -password reset ---- += user info
 -dodawanie oferty v
--edycja oferty v
+-edycja oferty	v
 -widok oferty
 -navbar
 -footer
 -usuwanie zainteresowanego ---- my purchases // 
+forgot password v
 
