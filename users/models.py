@@ -62,7 +62,7 @@ class User(AbstractBaseUser):
 
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username', 'phone_number', 'password']
 
     objects = MyAccountManager()
 

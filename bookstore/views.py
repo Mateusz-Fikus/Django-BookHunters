@@ -10,7 +10,6 @@ User = get_user_model()
 def main(request):
     uname = request.user.username
 
-    print(request.user.is_authenticated)
     return render(request, 'dashboard.html', {'username': uname})
 
 

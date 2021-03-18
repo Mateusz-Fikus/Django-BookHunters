@@ -1,6 +1,8 @@
 {%  extends 'main.html' %}
 {% load static %}
+{% block title %}{{title}} profile{% endblock %}
 {% block content %}
+
 
 <style>
 	.profile-pic{
@@ -36,9 +38,12 @@
 	</div>
 </div>
 
-{% if user.id == request.user.id %}
+<hr>
 
-<h3 class="mt-5">My books</h3>
+
+{% if user.id == request.user.id and offers != none %}
+
+<h3 class="mt-3">Manage your offers</h3>
 
 	<div class="row mt-3">
 			<div class="col-md">
@@ -56,12 +61,49 @@
 						</tr>
 
 						{% for offer in offers %}
+							{% if offer.id_buyer == none %}
 							<tr>
 								<td>{{offer.title}}</td>
 								<td>{{offer.genre}}</td>
 								<td>{{offer.price}} zł</td>
-								<td><a href="{% url 'delete_offer' id=offer.id %}">Delete</a><a class="pl-5" href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
+								<td><a href="">ok</a></td>
         						<td><a href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
+							</tr>
+					
+							{% endif %}
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+			
+		</div>
+
+
+
+{% elif offers != none %}
+
+<h3 class="mt-3">Currently selling..</h3>
+
+	<div class="row mt-3">
+			<div class="col-md">
+				<div class="card card-body">
+					<h5>Products</h5>
+				</div>
+				<div class="card card-body">
+					<table class="table">
+						<tr>
+							<th>Book title</th>
+							<th>Genre</th>
+							<th>Price</th>
+							<th></th>
+						</tr>
+
+						{% for offer in offers %}
+							<tr>
+								<td>{{offer.title}}</td>
+								<td>{{offer.genre}}</td>
+								<td>{{offer.price}} zł</td>
+								<td><a href="">Buy request!</a></td>
 							</tr>
 							
 						{% endfor %}
@@ -71,6 +113,26 @@
 			</div>
 			
 		</div>
+
+{% else %}
+
+ 
+	<h3 class="mt-3">No books for sale!</h3>
+
+
 {% endif %}
+
+{% if sold_offers != none %}
+<hr>
+	<h3 class="mt-3">Books sold...</h3>
+
+{% else %}
+<hr>
+	<h3 class="mt-3">This user haven't sold any books yet!</h3>
+
+{% endif %}
+
+
+
 
 {% endblock %}

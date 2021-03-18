@@ -51,7 +51,6 @@ User = get_user_model()
 
 def view_profile(request, username):
 
-    print(request.user.is_authenticated)
 
     user_prof = get_object_or_404(User, username=username)
     
@@ -59,10 +58,18 @@ def view_profile(request, username):
 
 #GET - NAZWA_MODELU.DOESNOTEXIST
     
-    user_offers = offer.objects.filter(id_owner_user=user_prof.id)
+    user_offers = offer.objects.filter(id_owner_user=user_prof.id).filter(id_buyer=None)
+
+    user_sold_offers = offer.objects.filter(id_owner_user=user_prof.id).exclude(id_buyer=None)
+
+    if not user_sold_offers:
+        user_sold_offers = None
+        print('nie ma ofert sprzedanych')
+
+
 
     if not user_offers:
-        user_offers = 0
+        user_offers = None
         print('nie ma ofert')
     
 
@@ -73,7 +80,15 @@ def view_profile(request, username):
         picture = None
 
 
-    return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username})
+    print(user_sold_offers, "Sprzedane oferty")
+    print(user_offers, "Nie sprzedane ")
+
+
+
+    return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username
+    , 'sold_offers': user_sold_offers,
+    
+    })
 
 
 
