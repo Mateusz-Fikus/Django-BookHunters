@@ -1,0 +1,97 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block title %}{{title}} book{% endblock %}
+{% block content %}
+
+
+<style>
+	.profile-pic{
+		max-width: 100%;
+		max-height:100%;
+		margin: 0 auto;
+
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<h3 style="text-align: center">{{offer.title}}</h3>
+			<hr>
+			          
+            <a href="{{offer.front_picture.url}}" alt="BRak" class="profile-pic"><img class="" src="{{offer.front_picture.url}}" alt="offer pic"></a>
+			<hr>
+			<a class="btn btn-warning" href=""> &#8592; Back to offers</a>
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<p>{{offer.desc}}</p>	
+		
+            <br>
+            <h4>{{offer.price}} zł</h4>
+
+
+		
+            {% if offer.id_buyer == none and request.user.is_authenticated %}
+
+
+                <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success mt-3" style="width: 100px" data-toggle="modal" data-target="#exampleModalCenter">Want it!</button>
+                    {% for message in messages %}
+                        <p class="mt-4">{{message}}</p>
+                    {% endfor %}
+
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">I want that book!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" style="text-align: center">
+                                {% csrf_token %}
+                                <label for="w3review">Why should YOU get this book?</label>
+                                <textarea name="message" rows="10" cols="44"></textarea>
+                                <br><br>
+                                
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-warning" value="Give me!">
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+            {% elif request.user.is_authenticated == False %}
+
+            <button style="width:80px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Want it!</button> 
+            <br>
+            <p>You must be logged in to ask for that book!</p>
+
+            {% else %}
+
+
+
+            <button style="width:80px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Sold!</button>
+
+            {% endif %}
+		</div>
+	</div>
+</div>
+
+<hr>
+
+{% endblock %}

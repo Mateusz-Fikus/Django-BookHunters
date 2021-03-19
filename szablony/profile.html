@@ -19,10 +19,15 @@
 		<div class="card card-body">
 			<a class="btn btn-warning" href=""> &#8592; Back to Profile</a>
 			<hr>
-			<h3 style="text-align: center">Account Settings</h3>
-			<hr>
+			<h3 style="text-align: center">{{user.username}}</h3>
+			
+			{% if profile_pic is not none %}
 			<img class="profile-pic" src="{{ profile_pic.photo.url }}" >
-		
+			{% else %}
+			<img class="profile-pic" src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png" >
+			{% endif %}
+			<hr>
+			<h4 style="text-align: center" class="mt-3" >{{user.first_name}} {{user.last_name}}</h4>
 		</div>
 	</div>
 	<div class="col-md-9">
@@ -56,7 +61,7 @@
 							<th>Book title</th>
 							<th>Genre</th>
 							<th>Price</th>
-							<th>Buyer</th>
+							<th>Purchase requests</th>
 							<th>Actions</th>
 						</tr>
 
@@ -66,7 +71,7 @@
 								<td>{{offer.title}}</td>
 								<td>{{offer.genre}}</td>
 								<td>{{offer.price}} zł</td>
-								<td><a href="">ok</a></td>
+								<td><a href="{% url 'pending' id=offer.id %}">Preview</a></td>
         						<td><a href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
 							</tr>
 					
@@ -95,7 +100,7 @@
 							<th>Book title</th>
 							<th>Genre</th>
 							<th>Price</th>
-							<th></th>
+							<th>Check</th>
 						</tr>
 
 						{% for offer in offers %}
@@ -103,7 +108,7 @@
 								<td>{{offer.title}}</td>
 								<td>{{offer.genre}}</td>
 								<td>{{offer.price}} zł</td>
-								<td><a href="">Buy request!</a></td>
+								<td><a href="{% url 'offer_info' id=offer.id %}">Show</a></td>
 							</tr>
 							
 						{% endfor %}
@@ -124,7 +129,37 @@
 
 {% if sold_offers != none %}
 <hr>
-	<h3 class="mt-3">Books sold...</h3>
+
+	<div class="row mt-3">
+			<div class="col-md">
+				<div class="card card-body">
+					<h3 class="">Books sold..</h3>
+				</div>
+				<div class="card card-body">
+					<table class="table">
+						<tr>
+							<th>Book title</th>
+							<th>Genre</th>
+							<th>Price</th>
+							<th>Options</th>
+						</tr>
+
+						{% for sold_offer in sold_offers %}
+							<tr>
+								<td>{{sold_offer.title}}</td>
+								<td>{{sold_offer.genre}}</td>
+								<td>{{sold_offer.price}} zł</td>
+								<td><a href="{% url 'offer_info' id=sold_offer.id %}">Check book</a></td>
+							</tr>
+							
+						{% endfor %}
+						
+					</table>
+				</div>
+			</div>
+			
+		</div>
+
 
 {% else %}
 <hr>

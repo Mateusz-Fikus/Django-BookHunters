@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import BooleanField
 
 from users.models import User
 
@@ -37,3 +38,10 @@ class offer(models.Model):
         return self.title
 
 
+
+#REQUESTS VISIBLE FOR SELLER
+class pending(models.Model):
+    id_offer = models.ForeignKey(offer, on_delete=models.CASCADE, related_name='offer_number')
+    id_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='selling_user')
+    id_intrested = models.ForeignKey(User, on_delete=models.CASCADE, related_name='interested_user')
+    message = models.CharField(max_length=250, default=None, blank=True)

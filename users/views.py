@@ -64,13 +64,13 @@ def view_profile(request, username):
 
     if not user_sold_offers:
         user_sold_offers = None
-        print('nie ma ofert sprzedanych')
+        
 
 
 
     if not user_offers:
         user_offers = None
-        print('nie ma ofert')
+        
     
 
     try:
