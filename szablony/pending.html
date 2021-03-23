@@ -4,24 +4,40 @@
 {% block content %}
 
 
+<style>
+
+
+</style>
+
 
 <div class="row" style="text-align:center">
-    <h1>PENDING REQUESTS FOR {{buyer.id_offer.id}} </h1>
+    <h1>Someone wants to buy <em>{{book_title}}!</em> </h1>
+
+{% if buyers %}
 
     {% for buyer in buyers %}
 
 	    <div class="col-md-3">
     
-            <div class="card card-body">
+            <div class="card card-body" style="border-radius: 25px">
             
-                <a href="{% url 'view_profile' username=buyer.id_intrested.username %}">{{buyer.id_intrested.username}}</a>
+                <a href="{% url 'view_profile' username=buyer.id_intrested.username %}"><p><b>{{buyer.id_intrested.username}}</b></p></a>
                 <p> {{buyer.message}} {{ buyer.id }}</p>
-                <a href="{% url 'sell' id_offer=buyer.id_offer.id  id_user=buyer.id_intrested.id %}">Sell</a>
+                <a href="{% url 'sell' id_offer=buyer.id_offer.id  id_user=buyer.id_intrested.id %}"><button type="button" class="btn btn-success">Sell</button></a>
             </div>
         
         </div>
     {% endfor %}
 
+{% else %}
+
+    <div class="card card-body">
+
+        <h3>No interested people for now</h3>
+
+    </div>
+
+{% endif %}
 
 </div>
 

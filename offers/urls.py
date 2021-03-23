@@ -10,7 +10,8 @@ urlpatterns = [
     path('new_offer/', views.new_offer, name='new_offer'),
     path('delete/<id>', views.delete_offer, name='delete_offer'),
     path('edit/<id>', views.edit_offer, name='edit_offer'),
-    path('request_offer/<id>', views.request_offer, name='request_offer'),
     path('pending/<id>', views.pending_requests, name='pending'),
-    path('sell/<id_offer>/<id_user>', views.sell, name='sell')
+    path('sell/<id_offer>/<id_user>', views.sell, name='sell'),
+    path('history/', views.history, name='history'),
+    path('delete_pending/<id>', views.cancel, name='cancel_pending'),
 ]

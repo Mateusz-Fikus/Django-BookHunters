@@ -50,40 +50,23 @@ User = get_user_model()
 #WYSWIETLANIE PROFILU Z OFERTAMI I ZDJECIEM PROFILOWYM
 
 def view_profile(request, username):
-
-
     user_prof = get_object_or_404(User, username=username)
     
-#KAŻDY BŁĄD MUSI MIEĆ ODDZIELNY TRY - W INNYM WYPADKU REFERENCE ERROR
-
 #GET - NAZWA_MODELU.DOESNOTEXIST
-    
     user_offers = offer.objects.filter(id_owner_user=user_prof.id).filter(id_buyer=None)
-
     user_sold_offers = offer.objects.filter(id_owner_user=user_prof.id).exclude(id_buyer=None)
 
     if not user_sold_offers:
         user_sold_offers = None
-        
-
-
 
     if not user_offers:
         user_offers = None
         
-    
-
     try:
         picture = UserProfilePicture.objects.get(user=user_prof.id)
 #W RAZIE BRAKU ZDJECIA PROFILOWEGO WYBIERANE JEST DOMYSLNE ZDJECIE
     except UserProfilePicture.DoesNotExist:
         picture = None
-
-
-    print(user_sold_offers, "Sprzedane oferty")
-    print(user_offers, "Nie sprzedane ")
-
-
 
     return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username
     , 'sold_offers': user_sold_offers,
@@ -104,25 +87,22 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('/')
     else:
-
         form = RegistrationForm()
 
         if request.method == 'POST':
             form = RegistrationForm(request.POST)
             if form.is_valid():
                 form.save()
-            # print(form.data['id'])
-
                 user = User.objects.get(username=form.data['username'])
+
             #EMAIL AKTYWACYJNY
-                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-                    
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))  
                 domain = get_current_site(request).domain
                 link = reverse('activate', kwargs={
                     'uidb64': uidb64, 'token': token_generator.make_token(user)})
 
                 activate_url = 'http://' + domain + link
-                subject = 'witamy na pizdowce'
+                subject = 'Welcome to book hunters!'
                 message = 'Hej ' + user.username + ' Please verify your account by clicking this link\n' + activate_url
                 recipient = str(user.email)
                 send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently = False)
@@ -231,8 +211,7 @@ def activate(request, uidb64, token):
     if user is not None and token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        
-        return redirect('login.html')
+        return render(request, 'login.html')
     else:
         return redirect('/')
 

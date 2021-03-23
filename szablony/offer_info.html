@@ -33,14 +33,15 @@
 		
             <br>
             <h4>{{offer.price}} zł</h4>
+            <p class="mt-4">Owner: <a href="{% url 'view_profile' username=offer.id_owner_user.username %}"><b>{{offer.id_owner_user.username}}</b></a></p>
 
 
 		
-            {% if offer.id_buyer == none and request.user.is_authenticated %}
+            {% if offer.id_buyer == none and request.user.is_authenticated and request.user.id != offer.id_owner_user.id %}
 
 
                 <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success mt-3" style="width: 100px" data-toggle="modal" data-target="#exampleModalCenter">Want it!</button>
+                    <button type="button" class="btn btn-success mt-3" style="width: 120px" data-toggle="modal" data-target="#exampleModalCenter">Want it!</button>
                     {% for message in messages %}
                         <p class="mt-4">{{message}}</p>
                     {% endfor %}
@@ -77,15 +78,22 @@
 
             {% elif request.user.is_authenticated == False %}
 
-            <button style="width:80px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Want it!</button> 
+            <button style="width:120px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Want it!</button> 
             <br>
             <p>You must be logged in to ask for that book!</p>
 
-            {% else %}
+            {% elif offer.id_buyer %}
+
+            
+                <button style="width:120px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Sold!</button>
 
 
+            {% elif request.user.id == offer.id_owner_user.id %}
 
-            <button style="width:80px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Sold!</button>
+                <button style="width:120px" class="btn btn-secondary disabled mt-4" name="Sold!" value="Sold!">Want it!</button>
+                <br>
+                <p class="mt-2">You can't accept own offers!</p>
+
 
             {% endif %}
 		</div>

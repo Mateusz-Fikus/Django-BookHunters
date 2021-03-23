@@ -14,7 +14,7 @@ from django.contrib.auth.forms import AuthenticationForm
 class OfferForm(ModelForm):
     class Meta:
         model = offer
-        fields = ['title', 'desc', 'price', 'front_picture', 'back_picture', 'genre']
+        fields = ['title', 'desc', 'price', 'front_picture', 'genre']
   
 
 

@@ -6,10 +6,15 @@
 
 <style>
 	.profile-pic{
-		max-width: 200px;
-		max-height:200px;
+		max-width: 50%;
+		max-height:50%;
 		margin: 0 auto;
-		border-radius: 50%;
+
+	}
+
+	.info{
+		height: 100%; 
+		border-radius: 25px;
 	}
 </style>
 
@@ -30,17 +35,29 @@
 			<h4 style="text-align: center" class="mt-3" >{{user.first_name}} {{user.last_name}}</h4>
 		</div>
 	</div>
-	<div class="col-md-9">
-		<div class="card card-body">
+
+	<div class="col-md-5">
+		<div class="card card-body info">
 			
-			<form method="POST" action="" enctype="multipart/form-data">
-				
-				
 		
-			<input class="btn btn-primary" type="submit" name="Update Information">
-			</form>
+				<h3>Contact info</h3>
+
+				<h5 class="mt-5">Email address: <b>{{ user.email }}</b></h5>
+				<h5>Phone number: <b>{{ user.phone_number }}</b></h5>
+				<hr>
+			{% if user.id == request.user.id %}
+			<br>
+			<br>
+				<h5>My currently wanted books && My purchase history:</h5>
+				<a href="{% url 'history' %}"><button type="button" class="btn btn-info">Check && Manage</button></a>
+			<br>
+			<br>
+			<hr>
+			{% endif %}
 		</div>
 	</div>
+
+
 </div>
 
 <hr>
@@ -48,12 +65,12 @@
 
 {% if user.id == request.user.id and offers != none %}
 
-<h3 class="mt-3">Manage your offers</h3>
+<h2 class="mt-3">Management panel</h2>
 
 	<div class="row mt-3">
 			<div class="col-md">
 				<div class="card card-body">
-					<h5>Products</h5>
+					<h3>Offers..</h3>
 				</div>
 				<div class="card card-body">
 					<table class="table">
@@ -63,16 +80,24 @@
 							<th>Price</th>
 							<th>Purchase requests</th>
 							<th>Actions</th>
+							<th>DELETE</th>
 						</tr>
 
 						{% for offer in offers %}
 							{% if offer.id_buyer == none %}
 							<tr>
 								<td>{{offer.title}}</td>
+
 								<td>{{offer.genre}}</td>
+
 								<td>{{offer.price}} zł</td>
+
 								<td><a href="{% url 'pending' id=offer.id %}">Preview</a></td>
-        						<td><a href="{% url 'edit_offer' id=offer.id %}">Edit</a></td>
+
+        						<td><a href="{% url 'edit_offer' id=offer.id %}">Edit</a> //
+								<a href="{% url 'offer_info' id=offer.id %}">Show</a></td>
+
+								<td><a href="{% url 'delete_offer' id=offer.id %}">Delete</a></td>
 							</tr>
 					
 							{% endif %}
@@ -92,7 +117,7 @@
 	<div class="row mt-3">
 			<div class="col-md">
 				<div class="card card-body">
-					<h5>Products</h5>
+					<h3>Offers</h3>
 				</div>
 				<div class="card card-body">
 					<table class="table">
@@ -133,7 +158,7 @@
 	<div class="row mt-3">
 			<div class="col-md">
 				<div class="card card-body">
-					<h3 class="">Books sold..</h3>
+					<h3>Books sold..</h3>
 				</div>
 				<div class="card card-body">
 					<table class="table">
