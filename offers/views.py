@@ -40,7 +40,7 @@ def offer_info(request, id):
             return redirect('/')
 
         else:
-            messages.info(request, 'Yo allready want it')
+            messages.info(request, 'You allready want that book!')
             
     return render(request, 'offer_info.html', {'offer': offer_get, 'title': offer_get.title})
 
@@ -74,10 +74,13 @@ def edit_offer(request, id):
 
         return redirect('/')
 
+    messages.info(request, 'WARNING! Editing offer will delete all current purchase requests for that offer!')
 
     form = OfferForm(request.POST or None, request.FILES or None, instance=offer_ed)
 
     if form.is_valid():
+        interested_users = pending.objects.filter(id_offer=offer_ed)
+        interested_users.delete()
         form.save()
         return HttpResponseRedirect(reverse('offer_info', args=[offer_ed.id]))
 

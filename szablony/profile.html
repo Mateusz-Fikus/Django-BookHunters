@@ -16,13 +16,15 @@
 		height: 100%; 
 		border-radius: 25px;
 	}
+	
 </style>
+
 
 <br>
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-3 kurwa"">
 		<div class="card card-body">
-			<a class="btn btn-warning" href=""> &#8592; Back to Profile</a>
+			<a class="btn btn-warning" href="{% url 'mainpage' %}"> &#8592; Homepage</a>
 			<hr>
 			<h3 style="text-align: center">{{user.username}}</h3>
 			
@@ -48,8 +50,8 @@
 			{% if user.id == request.user.id %}
 			<br>
 			<br>
-				<h5>My currently wanted books && My purchase history:</h5>
-				<a href="{% url 'history' %}"><button type="button" class="btn btn-info">Check && Manage</button></a>
+				<h5>Purchases & Pendings:</h5>
+				<a href="{% url 'history' %}"><button type="button" class="btn btn-warning">Browse</button></a>
 			<br>
 			<br>
 			<hr>
@@ -187,12 +189,9 @@
 
 
 {% else %}
-<hr>
+	<hr>
 	<h3 class="mt-3">This user haven't sold any books yet!</h3>
 
 {% endif %}
-
-
-
 
 {% endblock %}

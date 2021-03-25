@@ -40,6 +40,10 @@
                                 {{ form.genre|as_crispy_field }}
     
                             </div>
+
+                            {% for message in messages %}
+                                <p><b>{{message}}</b></p>
+                            {% endfor %}
 				
 				   <button type="submit" class="btn btn-primary">Submit</button>
 			</form>

@@ -1,68 +1,111 @@
 {%  extends 'main.html' %}
-
+{% load static %}
 {% block content %}
 
-{%  include 'status.html' %}
+
+<style>
+	.back-pic{
+		width: 100%;
+		height: 400px;
+		filter: brightness(50%);
+		border-radius: 40px;
+
+	}
+	.centered {
+  		position: absolute;
+  		top: 50%;
+  		left: 50%;
+  		transform: translate(-50%, -50%);
+	}
+
+	.container-pic {
+  		position: relative;
+  		text-align: center;
+  		color: white;
+	}
+
+	.offer-picture{
+		width: 100%;
+		border-radius: 10px;
+		height: 100%;
+	}
+
+</style>
+
+
+<div class="container-pic mt-2">
+
+	<img class="back-pic" src="{% static 'images/pictures/picture.jpg' %}"/>
+	<div class="centered"><h1>WELCOME TO BOOKHUNTERS</h1></div>
+</div>
 
 <br>
 
+
 <div class="row">
-	<div class="col-md-5">
-		<h5>CUSTOMERS:</h5>
-		<hr>
-		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
-			<table class="table table-sm">
-				<tr>
-					<th></th>
-					<th>Customer</th>
-					<th>Phone</th>
-				</tr>
 
-				{% for customer in customers %}
-					<tr>
-						<td><a class="btn btn-sm btn-info" href="{% url 'customer' customer.id %}">View</a></td>
-						<td>{{customer.name}}</td>
-						<td>{{customer.phone}}</td>
-					</tr>
-				{% endfor %}
-
-			</table>
-		</div>
+	<div class="card card-body" style="text-align: center; border-radius: 30px;">
+		<h2>Filter</h2>
 	</div>
+	<div class="card card-body">
+		<form method="get">
 
-	<div class="col-md-7">
-		<h5>LAST 5 ORDERS</h5>
-		<hr>
-		<div class="card card-body">
-			
-			<table class="table table-sm">
-				<tr>
-					<th>Product</th>
-					<th>Date Orderd</th>
-					<th>Status</th>
-					<th>Update</th>
-					<th>Remove</th>
-				</tr>
-
-				{% for order in orders %}
-					<tr>
-						<td>{{order.product}}</td>
-						<td>{{order.date_created}}</td>
-						<td>{{order.status}}</td>
-						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-
-						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
-
-					</tr>
-				{% endfor %}
-
-		
-			</table>
-		</div>
+			Title: {{filter.form.title}}
+			Genre: {{filter.form.genre}}
+			Starting Price: {{filter.form.start_price}}
+			Ending price: {{filter.form.end_price}}
+			<button class="btn btn-primary" type="submit">
+				Search
+			</button>
+		</form>
 	</div>
 
 </div>
 
+		<div class="row" style="text-align: center;">
+
+			{% for book in offers %}
+
+			<div class="col-md-4 col-lg-2">
+		
+				<div class="card card-body" style="border-radius: 25px">
+					<img class="offer-picture" src="{{book.front_picture.url}}">
+					<p class="mt-2"><b>{{book.title}}</b></p>
+					<p>Genre: {{book.genre}}</p>
+					<p> {{book.price}} zł</p>
+					<a href="{% url 'offer_info' id=book.id %}"><button type="button" class="btn btn-success">Check</button></a>
+				</div>
+			
+			</div>
+			{% endfor %}
+
+		</div>
+
+
+<script>
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[0].placeholder='Title..';
+		form_fields[1].placeholder='0';
+		form_fields[2].placeholder='100';
+
+
+
+</script>
+
+
+
+
 {% endblock %}
 
+
+<!-- 
+
+	<div class="row">
+		<div class="col-md-5">
+			<div class="card card-body">
+				<p>jebany paragraf</p>
+			</div>
+		</div>
+	</div>
+	
+-->
