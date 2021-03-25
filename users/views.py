@@ -24,13 +24,12 @@ from users.models import UserProfilePicture
 #JEŚLI NIE MA OFERT I ZDJECIA / DOES NOT EXIST
 from django.core.exceptions import ObjectDoesNotExist
 
-#DO MAILA
-from core.settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
+
+from users.utils import email
 
 #TOKENY WERYFIKACJI KONTA MAILEM
-from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_text, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from users.utils import token_generator
 from django.urls import reverse
@@ -96,18 +95,8 @@ def register(request):
                 user = User.objects.get(username=form.data['username'])
 
             #EMAIL AKTYWACYJNY
-                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))  
-                domain = get_current_site(request).domain
-                link = reverse('activate', kwargs={
-                    'uidb64': uidb64, 'token': token_generator.make_token(user)})
 
-                activate_url = 'http://' + domain + link
-                subject = 'Welcome to book hunters!'
-                message = 'Hej ' + user.username + ' Please verify your account by clicking this link\n' + activate_url
-                recipient = str(user.email)
-                send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently = False)
-
-                messages.info(request, 'Please verify your account by confirmation email')
+                email("REG", **{"user": user, "domain":get_current_site(request).domain})
                 return redirect('login')
                 #return redirect('/')
 
@@ -125,18 +114,9 @@ def forgot_password(request):
             messages.info(request, 'Invalid email')
         
         if user_email is not None:
-            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-            domain = get_current_site(request).domain
-            link = reverse('reset_password', kwargs={
-                'uidb64': uidb64, 'token': token_generator.make_token(user)
-            })
-
-            reset_url = domain + link
-            subject = 'Bookstore password reset'
-            message = 'Hey ' + user.first_name + ', here is your password reset email. If you dont know why you got this message, do not click the following link!\n' + reset_url
-            recipient = str(user_email)
-            send_mail(subject, message, EMAIL_HOST_USER, [recipient], fail_silently=False)
             
+            email("RES", **{"user": user, "domain":get_current_site(request).domain})
+
             messages.info(request, 'Password reset email has been sent!')
 
             return redirect('login')
@@ -182,10 +162,10 @@ def login(request):
             return redirect('/')
         else:
             messages.info(request, 'invalid credentials')
-            return redirect('login')
+
         
-    else:
-        return render(request, 'login.html', {'title' : "Login"})
+
+    return render(request, 'login.html', {'title' : "Login"})
 
 
 
@@ -211,9 +191,9 @@ def activate(request, uidb64, token):
     if user is not None and token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return render(request, 'login.html')
-    else:
         return redirect('/')
+
+    return redirect('/')
 
 
 

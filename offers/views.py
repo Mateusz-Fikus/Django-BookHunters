@@ -1,7 +1,9 @@
 from django.views.decorators.cache import cache_control
-
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages 
 
+#EMAIL
+from users.utils import email
 
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from .models import offer, pending
@@ -121,11 +123,13 @@ def sell(request, id_offer, id_user):
         return redirect('/')    
 
     else:
-
+        user_sold = User.objects.get(id=id_user)
+        print(user_sold)
         sold_offer = offer.objects.get(id=id_offer)
         pendings = pending.objects.filter(id_offer=id_offer)
         pendings.delete()
-        sold_offer.id_buyer = User.objects.get(id=id_user)
+        sold_offer.id_buyer = user_sold
+        email("NOT", **{"offer": sold_offer, "user": user_sold, "domain": get_current_site(request).domain})
         sold_offer.save()
 
         return HttpResponseRedirect(reverse('offer_info', args=[sold_offer.id]))
