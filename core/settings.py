@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '64.227.115.103']
+ALLOWED_HOSTS = ['127.0.0.1', '64.227.115.103', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -74,8 +74,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'bookhuntersdatabase',
-            'USER': config('USER'),
-            'PASSWORD': config('PASSWORD'),
+            'USER': 'bookhuntersadmin',
+            'PASSWORD': 'RS998800',
             'HOST': 'localhost',
             'PORT': '',
         }
