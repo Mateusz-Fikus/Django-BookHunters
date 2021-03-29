@@ -61,13 +61,26 @@ AUTH_USER_MODEL = 'users.User'
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'bookhuntersdatabase',
+            'USER': config('USER'),
+            'PASSWORD': config('PASSWORD'),
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
