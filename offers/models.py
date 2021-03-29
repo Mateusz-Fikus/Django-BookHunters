@@ -1,12 +1,7 @@
 from django.db import models
 from django.db.models.fields import BooleanField
-
 from users.models import User
 
-# Create your models here.
-
-
-#CHOICES FOR GENRE
 GENRE_CHOICES= [
     ('scifi', 'Sci-Fi'),
     ('fantasy', 'Fantasy'),
@@ -20,10 +15,6 @@ GENRE_CHOICES= [
     ('other', 'Other')
     ]
 
-
-
-
-
 class offer(models.Model):
     id_owner_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='seller')
     title = models.CharField(max_length=30)
@@ -35,8 +26,6 @@ class offer(models.Model):
     
     def __str__(self):
         return self.title
-
-
 
 #REQUESTS VISIBLE FOR SELLER
 class pending(models.Model):

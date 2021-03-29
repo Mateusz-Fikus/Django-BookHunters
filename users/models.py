@@ -3,11 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 # Create your models here.
 
 
-#TWORZENIE UŻYTKOWNIKA I DEFINIOWANIE PRZESYŁANYCH DANYCH Z BAZY
-
-
-#UWAGA - USER_ACTIVE DOMYSLNIE 0 - TRZEBA ZMIENIC PONIEWAŻ NIE DA SIE ZALOGOWAC
-
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, first_name, last_name, phone_number, password=None):
         if not email:
@@ -77,9 +72,7 @@ class User(AbstractBaseUser):
         return True
 
 
-
-
-#ZDJECIA PROFILOWE
+#ZDJECIE PROFILOWE - MODEL "OPCJONALNY"
 class UserProfilePicture(models.Model):
     user= models.OneToOneField(User, on_delete= models.CASCADE, null=True, blank=True)
     photo= models.ImageField(upload_to= 'profile_pictures', null=True, blank=True)

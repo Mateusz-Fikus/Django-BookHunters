@@ -5,11 +5,10 @@
 
 
 <style>
-	.profile-pic{
-		max-width: 50%;
-		max-height:50%;
-		margin: 0 auto;
-
+	.offer-picture{
+		width: 100%;
+		border-radius: 10px;
+		height: 100%;
 	}
 </style>
 
@@ -20,7 +19,7 @@
 			<h3 style="text-align: center">{{offer.title}}</h3>
 			<hr>
 			          
-            <a href="{{offer.front_picture.url}}" alt="BRak"><img class="profile-pic" src="{{offer.front_picture.url}}" alt="offer pic"></a>
+            <a href="{{offer.front_picture.url}}" alt="BRak"><img class="offer-picture" src="{{offer.front_picture.url}}" alt="offer pic"></a>
 			<hr>
 			<a class="btn btn-warning" href="{% url 'mainpage' %}"> &#8592; Homepage</a>
 		
@@ -33,7 +32,8 @@
 		
             <br>
             <h4>{{offer.price}} zł</h4>
-            <p class="mt-4">Owner: <a href="{% url 'view_profile' username=offer.id_owner_user.username %}"><b>{{offer.id_owner_user.username}}</b></a></p>
+            <p><b>Genre: {{offer.genre}}</b></p>
+            <p class="mt-2">Owner: <a href="{% url 'view_profile' username=offer.id_owner_user.username %}"><b>{{offer.id_owner_user.username}}</b></a></p>
 
 
 		

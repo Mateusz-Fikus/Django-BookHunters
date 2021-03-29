@@ -1,19 +1,14 @@
+import os
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
-
-
-
-
-
-
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
-from django.contrib.auth.forms import SetPasswordForm
 
 
 #FORMULARZE
 from .forms import RegistrationForm
+from django.contrib.auth.forms import SetPasswordForm
 
 #POBIERANIE OFERT OD DANEGO UŻYTKOWNIKA NA PROFIL
 from offers.models import offer
@@ -33,6 +28,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from users.utils import token_generator
 from django.urls import reverse
+
 
 from django.contrib import auth
 
@@ -67,21 +63,22 @@ def view_profile(request, username):
     except UserProfilePicture.DoesNotExist:
         picture = None
 
+#ZMIANA ZDJECIA PROFILWOEGO
+    if request.method == 'POST':
+        if request.user.id == user_prof.id:
+            if len(request.FILES) != 0:
+                image = request.FILES['image']
+                picture = UserProfilePicture.objects.get(user=request.user.id)
+                picture.photo = image
+                picture.save()
+            else:
+                print("No files uploaded")
+
     return render(request, 'profile.html', {'user': user_prof, 'offers': user_offers, 'profile_pic': picture, 'title': user_prof.username
-    , 'sold_offers': user_sold_offers,
-    
+    , 'sold_offers': user_sold_offers,   
     })
 
-
-
-#little change
-
-
-#FORMULARZ REJESTRACYJNY
-
 def register(request):
-
-
 
     if request.user.is_authenticated:
         return redirect('/')
@@ -94,12 +91,9 @@ def register(request):
                 form.save()
                 user = User.objects.get(username=form.data['username'])
 
-            #EMAIL AKTYWACYJNY
-
+                #EMAIL AKTYWACYJNY
                 email("REG", **{"user": user, "domain":get_current_site(request).domain})
                 return redirect('login')
-                #return redirect('/')
-
 
         return render(request, 'register.html',  {'title' : "Register", 'form': form})
 
@@ -122,6 +116,7 @@ def forgot_password(request):
             return redirect('login')
 
     return render(request, 'forgot_password.html', {'title':'Password reset'})
+
 
 def reset_pasword(request, uidb64, token):
     form = SetPasswordForm(User)
@@ -163,11 +158,7 @@ def login(request):
         else:
             messages.info(request, 'invalid credentials')
 
-        
-
     return render(request, 'login.html', {'title' : "Login"})
-
-
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
@@ -187,15 +178,10 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
-
     if user is not None and token_generator.check_token(user, token):
         user.is_active = True
         user.save()
         return redirect('/')
 
     return redirect('/')
-
-
-
-
 

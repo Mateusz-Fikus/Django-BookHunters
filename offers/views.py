@@ -11,12 +11,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
 from .forms import OfferForm
 from django.urls import reverse
-
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-# Create your views here.
+
 
 
 def all_offers(request):

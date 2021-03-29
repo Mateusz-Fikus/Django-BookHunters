@@ -12,16 +12,11 @@ from django.utils.http import urlsafe_base64_encode
 
 from django.urls import reverse
 
-
-
 class AppTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (text_type(user.pk) + text_type(timestamp) + text_type(user.username) )
 
 token_generator = AppTokenGenerator()
-
-
-
 
 
 def email(task, **kwargi):

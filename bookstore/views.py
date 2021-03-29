@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
-from django.shortcuts import redirect
-from django.contrib.sites.shortcuts import get_current_site
 from offers import filters
 from offers.models import offer
 from offers.filters import OfferFilter 
