@@ -7,7 +7,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'szablony')
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '64.227.115.103', 'localhost', 'bookhuntersproject.xyz', 'www.bookhuntersproject.xyz']
 
