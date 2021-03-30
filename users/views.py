@@ -72,7 +72,7 @@ def view_profile(request, username):
                     picture = UserProfilePicture.objects.get(user=request.user.id)
                     picture.photo = image
                     picture.save()
-                except UserProfilePicture.DoesNotExist:
+                except:
                     picutre = UserProfilePicture()
                     picture.user = User.objects.get(id=request.user.id)
                     picture.photo = image
