@@ -74,7 +74,7 @@ def view_profile(request, username):
                     picture.photo = image
                     picture.save()
                 except:
-                    picutre = UserProfilePicture()
+                    picture = UserProfilePicture()
                     picture.user = User.objects.get(id=request.user.id)
                     picture.photo = image
                     picture.save()                    
