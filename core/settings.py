@@ -7,7 +7,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'szablony')
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '64.227.115.103', 'localhost', 'bookhuntersproject.xyz', 'www.bookhuntersproject.xyz']
 
@@ -60,7 +60,7 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'users.User'
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
+"""
 if DEBUG:
     DATABASES = {
         'default': {
@@ -68,8 +68,8 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-
-else:
+"""
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
