@@ -43,7 +43,7 @@
     </ul>
     {% if request.user.is_authenticated %}
       
-    <a href="account_settings.html"><span class="hello-msg">Hello, {{request.user.first_name}}</span></a>
+    <a href="{% url 'view_profile' username=request.user.username %}"><span class="hello-msg">Hello, {{request.user.first_name}}</span></a>
     <a href="{% url 'logout' %}"><span class="hello-msg">Logout</span></a>
     
     {% else %}
