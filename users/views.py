@@ -67,6 +67,7 @@ def view_profile(request, username):
     if request.method == 'POST':
         if request.user.id == user_prof.id:
             if len(request.FILES) != 0:
+                image = request.FILES['image']
                 try:
                     image = request.FILES['image']
                     picture = UserProfilePicture.objects.get(user=request.user.id)
