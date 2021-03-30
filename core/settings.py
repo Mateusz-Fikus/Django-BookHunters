@@ -60,7 +60,7 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'users.User'
 
 WSGI_APPLICATION = 'core.wsgi.application'
-"""
+
 if DEBUG:
     DATABASES = {
         'default': {
@@ -68,8 +68,8 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-"""
-if DEBUG:
+
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
