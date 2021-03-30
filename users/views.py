@@ -67,10 +67,16 @@ def view_profile(request, username):
     if request.method == 'POST':
         if request.user.id == user_prof.id:
             if len(request.FILES) != 0:
-                image = request.FILES['image']
-                picture = UserProfilePicture.objects.get(user=request.user.id)
-                picture.photo = image
-                picture.save()
+                try:
+                    image = request.FILES['image']
+                    picture = UserProfilePicture.objects.get(user=request.user.id)
+                    picture.photo = image
+                    picture.save()
+                except UserProfilePicture.DoesNotExist:
+                    picutre = UserProfilePicture()
+                    picture.user = User.objects.get(id=request.user.id)
+                    picture.photo = image
+                    picture.save()                    
             else:
                 print("No files uploaded")
 

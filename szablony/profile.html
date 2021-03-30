@@ -38,7 +38,7 @@
 			<form enctype="multipart/form-data" method="POST">
 					{% csrf_token %}
 					<p class="mt-3">Change your profile picture</p>
-					 <input type="file" name="image">
+					 <input type="file" name="image" accept="image/*">
 				<button type="submit" class="btn btn-primary">Change</button>
 			</form>
 
