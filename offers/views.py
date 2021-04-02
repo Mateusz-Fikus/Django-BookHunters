@@ -23,6 +23,9 @@ def all_offers(request):
 
     return render(request, 'all_offers.html', {'offers': offers_all, 'title': 'all books!'})
 
+
+
+
 def offer_info(request, id):
     offer_get = get_object_or_404(offer, pk=id)
 
@@ -45,6 +48,9 @@ def offer_info(request, id):
             
     return render(request, 'offer_info.html', {'offer': offer_get, 'title': offer_get.title})
 
+
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def new_offer(request):
@@ -64,7 +70,10 @@ def new_offer(request):
             return HttpResponseRedirect(reverse('offer_info', args=[offer.id]))
 
     return render(request, 'form_offer.html', {'form': form, 'title':'Add offer'})
-    
+
+
+
+  
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def edit_offer(request, id):
@@ -87,6 +96,9 @@ def edit_offer(request, id):
 
     return render(request, 'form_offer.html', {'form': form, 'title': 'Edit offer'})
 
+
+
+
 @login_required(login_url='login')
 def delete_offer(request, id):
 
@@ -103,6 +115,9 @@ def delete_offer(request, id):
     #zwrot do tej samej strony
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
+
+
 @login_required(login_url='login')
 def pending_requests(request, id):
 
@@ -116,6 +131,9 @@ def pending_requests(request, id):
     else:
         return redirect('/')
 
+
+
+
 def sell(request, id_offer, id_user):
 
     if request.user.id == id_user:
@@ -128,10 +146,15 @@ def sell(request, id_offer, id_user):
         pendings = pending.objects.filter(id_offer=id_offer)
         pendings.delete()
         sold_offer.id_buyer = user_sold
-        email("NOT", **{"offer": sold_offer, "user": user_sold, "domain": get_current_site(request).domain})
+        
+        #EMAIL FUNCTIONS DISABLED IN PREVIEW VERSION - EMAIL IS DEFINED IN users/utils.py
+        #email("NOT", **{"offer": sold_offer, "user": user_sold, "domain": get_current_site(request).domain})
         sold_offer.save()
 
         return HttpResponseRedirect(reverse('offer_info', args=[sold_offer.id]))
+
+
+
 
 @login_required(login_url='login')
 def history(request):
@@ -139,9 +162,10 @@ def history(request):
     wanted = pending.objects.filter(id_intrested=User.objects.get(id=request.user.id))
     bought_books = offer.objects.filter(id_buyer=User.objects.get(id=request.user.id))
 
-    print(wanted)
-
     return render(request, 'history.html', {'pendings': wanted, 'bought': bought_books, 'title': 'My history'})
+
+
+
 
 @login_required(login_url='login')
 def cancel(request, id):

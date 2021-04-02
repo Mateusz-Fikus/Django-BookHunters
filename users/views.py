@@ -6,13 +6,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 
 
-#FORMULARZE
+#FORMS
 from .forms import RegistrationForm
 from django.contrib.auth.forms import SetPasswordForm
 
-#POBIERANIE OFERT OD DANEGO UŻYTKOWNIKA NA PROFIL
+#OFFERS
 from offers.models import offer
-#POBIERANIE ZDJECIA NA PROFIL
+#PROFILE PICTURES
 from users.models import UserProfilePicture
 
 
@@ -59,11 +59,11 @@ def view_profile(request, username):
         
     try:
         picture = UserProfilePicture.objects.get(user=user_prof.id)
-#W RAZIE BRAKU ZDJECIA PROFILOWEGO WYBIERANE JEST DOMYSLNE ZDJECIE
+
     except UserProfilePicture.DoesNotExist:
         picture = None
 
-#ZMIANA ZDJECIA PROFILWOEGO
+#PROFILE PIC CHANGE
     if request.method == 'POST':
         if request.user.id == user_prof.id:
             if len(request.FILES) != 0:
@@ -85,6 +85,9 @@ def view_profile(request, username):
     , 'sold_offers': user_sold_offers,   
     })
 
+
+
+
 def register(request):
 
     if request.user.is_authenticated:
@@ -97,12 +100,17 @@ def register(request):
             if form.is_valid():
                 form.save()
                 user = User.objects.get(username=form.data['username'])
-
-                #EMAIL AKTYWACYJNY
-                email("REG", **{"user": user, "domain":get_current_site(request).domain})
+                #NO USER VALIDATION - PREVIEW VERSION
+                user.is_active = True
+                user.save()
+                #ACTIVATION EMAIL DOES NOT WORK IN PREVIEW VERSION
+                #email("REG", **{"user": user, "domain":get_current_site(request).domain})
                 return redirect('login')
 
         return render(request, 'register.html',  {'title' : "Register", 'form': form})
+
+
+
 
 def forgot_password(request):
 
@@ -112,9 +120,10 @@ def forgot_password(request):
         try:
            user = User.objects.get(email=user_email)
         except(User.DoesNotExist):
+            user = None
             messages.info(request, 'Invalid email')
         
-        if user_email is not None:
+        if user_email is not None and user is not None:
             
             email("RES", **{"user": user, "domain":get_current_site(request).domain})
 
@@ -123,6 +132,7 @@ def forgot_password(request):
             return redirect('login')
 
     return render(request, 'forgot_password.html', {'title':'Password reset'})
+
 
 
 def reset_pasword(request, uidb64, token):
@@ -151,6 +161,7 @@ def reset_pasword(request, uidb64, token):
     return redirect('/')
 
 
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login(request):
     if request.method == 'POST':
@@ -167,14 +178,19 @@ def login(request):
 
     return render(request, 'login.html', {'title' : "Login"})
 
+
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def logout(request):
     if request.method == 'POST':
-
         auth.logout(request)
         return redirect('login')
+
     return render(request, 'logout.html')
+
+
 
 def activate(request, uidb64, token):
     try:

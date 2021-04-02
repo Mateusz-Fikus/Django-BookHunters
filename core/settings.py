@@ -5,9 +5,11 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'szablony')
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = "1#=ps^5euet+wl&qbl#%vy!59$*kbds)86@u=$f)$vh!=9!15f"
 
-DEBUG = False
+DEBUG = True
+
+#THE FOLLOWING HOSTS NO LONGER EXIST - DEPLOYMENT TESTS FINISHED
 
 ALLOWED_HOSTS = ['127.0.0.1', '64.227.115.103', 'localhost', 'bookhuntersproject.xyz', 'www.bookhuntersproject.xyz']
 
@@ -69,14 +71,15 @@ if DEBUG:
         }
     }
 
+
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'bookhuntersdatabase',
-            'USER': 'bookhuntersadmin',
-            'PASSWORD': 'RS998800',
-            'HOST': 'localhost',
+            'NAME': '',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
             'PORT': '',
         }
     }
@@ -109,6 +112,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+#EMAIL FUNCTION DISABLED IN PREVIEW VERSION || note: during deployment google smtp only works when working on registered domain with SSL enabled.
+#EMAIL USED DURING PROJECT CREATION DOES NO LONGER EXIST - ANY DATA ABOUT PASSWORDS IS NO LONGER VALID
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
@@ -118,34 +124,36 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 
+#DEPLOYMENT 
+
+if DEBUG:
 
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'bookhuntersstorage'
-AWS_S3_ENDPOINT_URL = 'https://fra1.digitaloceanspaces.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'bookhunters-static'
+    STATIC_URL = '/static/'
+    #STATIC_ROOT = os.path.join(BASE_DIR, 'css')
+    STATICFILES_DIRS = ['static']
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+    MEDIA_URL = '/images/'
 
+    
+#DIGITALOCEAN SPACES CONFIG - PREVIEW VERSION - THIS SPACE NO LONGER EXISTS
+else:
 
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = 'bookhuntersstorage'
+    AWS_S3_ENDPOINT_URL = 'https://fra1.digitaloceanspaces.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = 'bookhunters-static'
 
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+    STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-
-"""
-STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'css')
-STATICFILES_DIRS = ['static']
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-MEDIA_URL = '/images/'
-"""
 
