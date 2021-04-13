@@ -1,6 +1,6 @@
 # BookHunters project
 
-### I did not focus on the design or overall presentation of the website, therefore it looks how it looks.
+### I did not focus on the design or overall presentation of the website, therefore it isn't perfect.
 
 ## How does it work?
 
